@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="//unpkg.com/circuit-sdk@latest/circuit.min.js" async></script>
+        <script type="module" src="./circuit-call-button.js" defer></script>
+        <script type="module" src="./circuit-call-stage.js" defer></script>
+    
+        <style>
+            /* Global page styles which are inherited by element */
+            body {
+                font-family: sans-serif;
+                font-size: 16px;
+            }
+      
+            /* Hide until defined to prevent flash rendering */
+            circuit-call-button:not(:defined), circuit-call-stage:not(:defined) {
+                opacity: 0;
+            }
+
+            /* Show call stage when stage is active (i.e. video is streaming) */
+            circuit-call-stage {
+                margin: 0 auto 20px auto;
+                width: 600px;
+                height: 400px;
+                display: block;
+            }
+            
+            circuit-call-stage:not([streaming]) {
+                display: none;
+            }
+
+            /* Layout */
+            html,
+            body {
+                margin:0;
+                padding:0;
+                height:100%;
+            }
+            #container {
+                min-height:100%;
+                position:relative;
+            }
+            #header {
+                background:#fff;
+                color: #000206;
+                padding:10px;
+                text-align: center;
+            }
+            .header-container {
+                max-width: 900px;
+                margin: 0 auto;
+                text-align: left;
+            }
+            #header img {
+                height: 60px;
+            }
+            #menu {
+                width: 100%;
+                background-color: #000;
+                color: #fff;
+                text-align: center;
+            }
+            #menu .menu-container {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 20px;
+                font-size: 20px;
+                text-align: left;
+            }
+            #menu .menu-container li {
+                display: inline;
+                list-style-type: none;
+                margin: 0 20px 0 0;
+            }
+            #body {
+                padding:10px;
+                padding-bottom:264px;   /* Height of the footer */
+                text-align: center;
+            }
+            .body-container {
+                max-width: 900px;
+                margin: 0 auto;
+                text-align: left;
+            }
+            .introduction img {
+                max-height: 40px;
+                vertical-align: bottom;
+                padding-right: 15px;
+            }
+            #call-container {
+                display: inline-block;
+                width: 600px;
+            }
+            #information {
+                display: inline-block;
+                vertical-align: top;
+                width: 270px;
+                border: solid 1px darkgray;
+                background-color: lightgray;
+                padding: 20px 10px;
+                color: #333;
+            }
+            #information h2 {
+                margin: 0;
+                padding: 0;
+                font-size: 22px;
+                padding-bottom: 5px;
+                border-bottom: solid 1px darkgray;
+            }
+            #information ul {
+                padding: 0;
+                padding-top: 8px;
+                margin: 0
+            }
+            #information ul li {
+                padding: 0;
+                margin: 0;
+                list-style-type: none;
+            }
+            #footer {
+                position:absolute;
+                bottom:0;
+                width:100%;
+                border-top: solid 1px grey;
+                text-align: center;
+                height:264px;   /* Height of the footer */
+            }
+            .footer-container {
+                max-width: 900px;
+                margin: 0 auto;
+                text-align: left;
+            }
+            .footer-logos {
+                padding: 20px;
+                text-align: center;
+            }
+            .footer-logos img {
+                max-height: 100px;
+                margin: 0 20px;
+            }
+            .footer-black {
+                background-color: #000;
+                text-align: center;
+                color: white;
+                padding: 20px 0;
+            }
+            .footer-black a,
+            .footer-black a:visited {
+                color: #88c541;
+            }
+            .footer-black img {
+                max-height: 40px;
+            }
+            #container {
+                height:100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <div id="header">
+                <div class="header-container">
+                    <div class="logo">
+                        <img src="images/atos.png" alt="">
+                        <img src="images/worldlocker.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div id="menu">
+                <ul class="menu-container">
+                    <li>Home</li>
+                    <li>Product</li>
+                    <li>Support</li>
+                </ul>
+            </div>
+
+            <div id="body">
+                <div class="body-container">
+                    <div class="introduction">
+                        <h1><img src="images/support.png" alt="">Live Support with a Video call</h1>
+                        <p>
+                            Contact one of our Support Agent in an audio/video call and get assistance with your Smart Locker
+                        </p>
+                    </div>
+                    
+                    <!--<p>Uses web components <code>circuit-call-button</code> and <code>circuit-call-stage</code> to start a video call with a Circuit user specified by the <code>target</code> attribute. OAuth popup asking for Circuit authentication and permissions is shown for the first call.</p>-->
+
+                    <div id="call-container">
+
+                        <circuit-call-stage></circuit-call-stage>
+
+                        <circuit-call-button
+                            video
+                            domain="circuitsandbox.net"
+                            clientId="d5ef60afc4c74694897446716112850d"
+                            target="shf+worldlockeragent@bluekiwi-software.com">Call Support</circuit-call-button>
+                    
+                    </div>
+
+                    <div id="information">
+                        <h2>Locker Information</h2>
+                        <ul>
+                            <li><strong>Locker ID :</strong> Locker #123</li>
+                            <li><strong>Status :</strong> Active</li>
+                            <li><strong>Location :</strong> Bezons</li>
+                            <li><strong>IP Address :</strong> 169.115.198.90</li>
+                            <li><strong>Last user ID :</strong> A535957</li>
+                            <li><strong>Last update :</strong> Feb 18, 2019 12:31</li>
+                        </ul>
+                    </div>
+                
+                    <!--
+                    <p id="overlay">
+                      <div>Set overlay attribute:</div>
+                      <input type="radio" name="overlay" value="bottom-right" checked="checked"> bottom-right<br>
+                      <input type="radio" name="overlay" value="top-right"> top-right<br>
+                      <input type="radio" name="overlay" value="top-left"> top-left<br>
+                      <input type="radio" name="overlay" value="bottom-left"> bottom-left<br>
+                      <input type="radio" name="overlay" value="hide"> hide<br>
+                    </p>
+                    <p>
+                      <a id="toggle" hidden href="">Toggle Sending Video</a>
+                    </p>
+                    -->
+
+                    <!--
+                    <p>
+                      <a target="_blank" href="https://github.com/circuit/circuit-web-components/blob/master/examples/videoCall.html">source</a> |
+                      <a target="_blank" href="https://github.com/circuit/circuit-web-components/tree/master/docs">documentation</a> |
+                      <a target="_blank" href="https://github.com/circuit/circuit-web-components">github</a> |
+                      <a target="_blank" href="https://www.npmjs.com/package/@unify/circuit-web-components">npm</a>
+                    </p>
+                    -->
+                </div>
+            </div>
+
+            <div id="footer">
+                <div class="footer-container">
+                    <div class="footer-logos">
+                        <img src="images/worldlockeravatar.jpg" alt="">
+                        <img src="images/quispel.png" alt="">
+                        <img src="images/qeeper.png" alt="">
+                    </div>
+                </div>
+                <div class="footer-black">
+                    Powered by <a href="https://www.circuit.com">Circuit</a>
+                    <br><br>
+                    <img src="images/circuit.png" alt="">
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const btnEl = document.querySelector('circuit-call-button');
+                const stageEl = document.querySelector('circuit-call-stage');
+                const btnToggle = document.querySelector('#toggle');
+
+                btnEl.addEventListener('callchange', e => {
+                    stageEl.call = e.detail;
+                    // e.detail && e.detail.isEstablished ? btnToggle.removeAttribute('hidden') : btnToggle.setAttribute('hidden', '');
+                });
+
+                for (let radio of document.querySelectorAll('input[name="overlay"]')) {
+                    radio.addEventListener('change', e =>
+                        stageEl.setAttribute('overlay', e.target.value)
+                    );
+                }
+
+                document.querySelector('#toggle').addEventListener('click', e => {
+                    e.preventDefault();
+                    btnEl.call.localMediaType.video ? btnEl.removeAttribute('video') : btnEl.setAttribute('video', '')
+                });
+            });
+        </script>
+    </body>
+</html>
